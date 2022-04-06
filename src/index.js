@@ -61,7 +61,7 @@ function onScroll() {
   const documentRect = document.documentElement.getBoundingClientRect();
   const CLIENT_HEIGHT = document.documentElement.clientHeight;
 
-  if ((documentRect.bottom < CLIENT_HEIGHT + 700) && gallery.fetching && gallery.isPossibleRequest) {
+  if ((documentRect.bottom < CLIENT_HEIGHT + 1000) && gallery.fetching && gallery.isPossibleRequest) {
     gallery.fetching = false;
     createItems();
   }
@@ -275,17 +275,5 @@ function showNotification(items) {
 // }
 
 //=======================================================================================================
-
-
-
-
-
-
-
-
-
-
-
-
 
 
