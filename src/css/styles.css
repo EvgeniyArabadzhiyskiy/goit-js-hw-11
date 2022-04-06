@@ -63,7 +63,13 @@ a{
   overflow: hidden;
 }
 
-
+button {
+  background-color: rgb(48, 222, 235);
+  border: none;
+  border: 1px solid rgb(85, 84, 84);
+  border-radius: 3px;
+  height: 25px;
+}
 
 
 img{
