@@ -38,7 +38,5 @@ export default class Gallery {
     this.totalResponses += items.hits.length;
     this.totalHits -= this.totalResponses;
     
-    console.log("Array", this.totalResponses);
-    console.log('ОСТАТОК ФОТО', this.totalHits);
   }
 }
