@@ -17,6 +17,7 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   loadMore: document.querySelector('.load-more'),
   sentinel: document.querySelector('#sentinel'),
+  photoCard: document.querySelector('.photo-card'),
 
 };
 
@@ -43,7 +44,7 @@ function createItems() {
   gallery.fetchItems().then(items => {
     gallery.isPossibleRequest = true;
     refs.loadMore.classList.add('is-hidden');
-   
+   console.log(items);
     showsEndOfPictures(items);
     showNotification(items)
     createCards(items)
@@ -92,24 +93,52 @@ function showNotification(items) {
 }
 
 
-function onEntry(entries) {
+
+
+
+function onEntry(entries,observer) {
 
   entries.forEach(entry => {
-    if (entry.isIntersecting && gallery.searcQuery !== '' && gallery.isPossibleRequest) {
+    if (entry.isIntersecting && gallery.searcQuery !== '') {
       createItems()
+      console.log('hello');
+      
+      // observer.observe(document.querySelector('.photo-card:last-child'))
     }
+    //  observer.observe(document.querySelector('.photo-card:last-child'))
+    
 
   })
 }
 
 const observer = new IntersectionObserver(onEntry, {
-  rootMargin: '150px',
+  // rootMargin: '100px',
 });
 
+//  observer.observe(document.querySelector('.photo-card:last-child'))
 observer.observe(refs.sentinel);
 
 
+
+
 ////=======================================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -322,3 +351,10 @@ observer.observe(refs.sentinel);
 //   }
   
 // }
+
+
+
+
+
+
+
