@@ -16,6 +16,7 @@ const refs = {
   input: document.querySelector('[type="text"]'),
   gallery: document.querySelector('.gallery'),
   loadMore: document.querySelector('.load-more'),
+  sentinel: document.querySelector('#sentinel'),
 
 };
 
@@ -28,8 +29,6 @@ const gallery = new Gallery()
 function onSubmit(evt) {
   evt.preventDefault();
 
-  window.addEventListener('scroll', onScroll);
-
   const form = evt.target
   gallery.searcQuery = form.elements.searchQuery.value;
 
@@ -37,7 +36,7 @@ function onSubmit(evt) {
   createItems();
   
   refs.gallery.innerHTML = '';
-
+  refs.sentinel.textContent = '';
 }
 
 function createItems() {
@@ -57,21 +56,7 @@ function createItems() {
   .finally(() => gallery.fetching = true)
 }
 
-function onScroll() {
-  const documentRect = document.documentElement.getBoundingClientRect();
-  const CLIENT_HEIGHT = document.documentElement.clientHeight;
 
-  if ((documentRect.bottom < CLIENT_HEIGHT + 1000) && gallery.fetching && gallery.isPossibleRequest) {
-    gallery.fetching = false;
-    createItems();
-  }
-
-  if (documentRect.bottom < 700 && documentRect.bottom > 500 && gallery.isActive && gallery.totalHits <= 0) {
-    gallery.isActive = false
-    Notify.failure("We're sorry, but you've reached the end of search results.");
-  }
-  
-}
 
 function createCards(items) {
   const markupGalleryCards = galleryTpl(items.hits);
@@ -99,19 +84,32 @@ function showNotification(items) {
     Notify.failure('Sorry, there are no images matching your search query. Please try again.');
     return
   }
+
+  if ( gallery.totalHits <= 0) {
+    // gallery.isActive = false
+    refs.sentinel.textContent = "We're sorry, but you've reached the end of search results."
+  }
 }
 
+
+function onEntry(entries) {
+
+  entries.forEach(entry => {
+    if (entry.isIntersecting && gallery.searcQuery !== '' && gallery.isPossibleRequest) {
+      createItems()
+    }
+
+  })
+}
+
+const observer = new IntersectionObserver(onEntry, {
+  rootMargin: '150px',
+});
+
+observer.observe(refs.sentinel);
+
+
 ////=======================================================================================================
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -277,3 +275,50 @@ function showNotification(items) {
 //=======================================================================================================
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function onScroll() {
+//   const documentRect = document.documentElement.getBoundingClientRect();
+//   const CLIENT_HEIGHT = document.documentElement.clientHeight;
+
+//   if ((documentRect.bottom < CLIENT_HEIGHT + 1000) && gallery.fetching && gallery.isPossibleRequest) {
+//     gallery.fetching = false;
+//     createItems();
+//   }
+
+//   if (documentRect.bottom < 700 && documentRect.bottom > 500 && gallery.isActive && gallery.totalHits <= 0) {
+//     gallery.isActive = false
+//     Notify.failure("We're sorry, but you've reached the end of search results.");
+//   }
+  
+// }
