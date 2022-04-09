@@ -30,13 +30,16 @@ export default class Gallery {
     this.page = 1;
     this.totalResponses = 0;
     this.isPossibleRequest = false;
-    this.isActive = true;
+    // this.isActive = true;
   }
 
   getQuantityOfRespons(items) {
     this.totalHits = items.totalHits;
     this.totalResponses += items.hits.length;
     this.totalHits -= this.totalResponses;
+
+    // console.log('totalHits' ,this.totalHits);
+    // console.log("totalResponses" , this.totalResponses);
     
   }
 }
