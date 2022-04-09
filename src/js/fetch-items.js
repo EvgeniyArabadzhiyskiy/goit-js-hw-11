@@ -15,7 +15,7 @@ export default class Gallery {
   }
 
   async  fetchItems() {
-    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searcQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+    const url = `${BASE_URL}?key=${API_KEY}&q=${this.searcQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=12&page=${this.page}`;
     this.incrementPage()
     this.fetching
     return (await axios(url)).data;
