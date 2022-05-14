@@ -48,6 +48,7 @@ function createItems() {
     showsEndOfPictures(items);
     showNotification(items)
     createCards(items)
+    loadMore()
   
   })
   .catch(error => {
@@ -92,33 +93,51 @@ function showNotification(items) {
   }
 }
 
+// function loadMore() {
+//   const observer = new IntersectionObserver(
+//     (entries, observer) => {
+//       console.log(entries)
+//       entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//           observer.unobserve(entry.target);
+//           createItems();
+//         }
+//       });
+//     }, {
+//       threshold: 0.5,
+//     }
+//   );
+
+//   if(document.querySelector("li:last-child")) {
+//     observer.observe(document.querySelector("li:last-child"));
+//   }
+// }
 
 
 
+//==================================================================================================
 
-function onEntry(entries,observer) {
+// function onEntry(entries,observer) {
 
-  entries.forEach(entry => {
-    if (entry.isIntersecting && gallery.searcQuery !== '') {
-      createItems()
-      console.log('hello');
+//   entries.forEach(entry => {
+//     if (entry.isIntersecting && gallery.searcQuery !== '') {
+//       createItems()
+//       console.log('hello');
       
-      // observer.observe(document.querySelector('.photo-card:last-child'))
-    }
-    //  observer.observe(document.querySelector('.photo-card:last-child'))
+//       // observer.observe(document.querySelector('.photo-card:last-child'))
+//     }
+//     //  observer.observe(document.querySelector('.photo-card:last-child'))
     
 
-  })
-}
+//   })
+// }
 
-const observer = new IntersectionObserver(onEntry, {
-  // rootMargin: '100px',
-});
+// const observer = new IntersectionObserver(onEntry, {
+//   // rootMargin: '100px',
+// });
 
-//  observer.observe(document.querySelector('.photo-card:last-child'))
-observer.observe(refs.sentinel);
-
-
+// //  observer.observe(document.querySelector('.photo-card:last-child'))
+// observer.observe(refs.sentinel);
 
 
 ////=======================================================================================================
@@ -126,12 +145,28 @@ observer.observe(refs.sentinel);
 
 
 
+function loadMore() {
+  
+  function onEntry(entries, observer)  {
+  
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && gallery.isPossibleRequest) {
+        observer.unobserve(entry.target);
+        createItems();
+      }
+    });
+  }
 
+  const observer = new IntersectionObserver(onEntry, {
+    // rootMargin: '100px',
+    threshold: 0.5,
+  });
 
+  if(document.querySelector("li:last-child")) {
+    observer.observe(document.querySelector("li:last-child"));
+  }
 
-
-
-
+}
 
 
 
