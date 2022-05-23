@@ -58,8 +58,6 @@ function createItems() {
   .finally(() => gallery.fetching = true)
 }
 
-
-
 function createCards(items) {
   const markupGalleryCards = galleryTpl(items.hits);
   refs.gallery.insertAdjacentHTML('beforeend',markupGalleryCards) ;
@@ -167,18 +165,6 @@ function loadMore() {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
